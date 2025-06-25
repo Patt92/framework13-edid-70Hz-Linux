@@ -1,4 +1,4 @@
-## how to create the bin, skip this, just for information
+## building firmware, skip this step
 
 ### tested with Arch Linux (6.15.3-arch1-1)
 
@@ -11,13 +11,14 @@ echo Modeline "2256x1504_70"  281.12  2256 2304 2336 2576  1504 1507 1517 1559  
 make
 ```
 
-## 1 add firmware
+## 1. add firmware
 ```bash
-cp 2256x1504_70.bin /usr/lib/firmware/edid/Internal70.bin
+git clone https://github.com/Patt92/framework13-edid-70Hz-Linux
+cp framework13-edid-70Hz-Linux/2256x1504_70.bin /usr/lib/firmware/edid/Internal70.bin
 #or the Internal70.bin (same file)
 ```
 
-## 2 Kernel / initramfs prepare, to fix error -2 on boot
+## 2. Kernel / init prepare, to fix error -2 on boot
 
 `/etc/mkinitcpio.conf`
 
@@ -29,7 +30,7 @@ FILES=(/lib/firmware/edid/Internal70.bin)
 mkinitcpio -P
 ```
 
-## 3 Add to the grub defaults for autoloading in pre state
+## 3. Add to the grub defaults for autoloading in pre state
 
 append:
 ```text
@@ -53,7 +54,7 @@ linux   /boot/vmlinuz-linux root=XXX rw zswap.enabled=0 rootfstype=ext4 loglevel
 ```
 
 
-## Verify after reboot
+## 4. Verify after reboot
 ```bash
 modetest -M amdgpu -c | grep -A4 eDP
 ```
