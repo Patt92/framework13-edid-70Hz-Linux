@@ -1,8 +1,9 @@
-## how to create the bin, not specific
+## how to create the bin, skip this, just for information
 
 ```bash
 echo Modeline "2256x1504_70"  281.12  2256 2304 2336 2576  1504 1507 1517 1559  +hsync +vsync ratio=3:2 | modeline2edid
 #add ratio parameter (see .S file)
+
 edid-generator -> make
 
 ```
@@ -24,21 +25,37 @@ FILES=(/lib/firmware/edid/Internal70.bin)
 mkinitcpio -P
 ```
 
-## 3 Add to grub in GRUB_CMDLINE_LINUX_DEFAULT
+## 3 Add to the grub defaults for autoloading in pre state
 
-`/etc/default/grub`
-
+append:
 ```text
 ... drm.edid_firmware=eDP-1:edid/Internal70.bin   
 ```
+in `/etc/default/grub` => Default Commandline
+
+```bash
+GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet drm.edid_firmware=eDP-1:edid/Internal70.bin"
+```
+
+### regenerate grub config
 
 ```bash
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
+it should look like this at the end in the ma
+```bash
+linux   /boot/vmlinuz-linux root=XXX rw zswap.enabled=0 rootfstype=ext4 loglevel=3 quiet drm.edid_firmware=eDP-1:edid/Internal70.bin
+```
+
+
 ## Verify after reboot
 ```bash
 modetest -M amdgpu -c | grep -A4 eDP
-#or check 
+```
+
+or check the boot log
+
+```bash
 dmesg | grep edid
 ```
