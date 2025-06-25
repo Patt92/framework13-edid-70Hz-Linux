@@ -18,7 +18,7 @@ cp framework13-edid-70Hz-Linux/2256x1504_70.bin /usr/lib/firmware/edid/Internal7
 #or the Internal70.bin (same file)
 ```
 
-## 2. Kernel / init prepare, to fix error -2 on boot
+## 2. init prepare, to fix error -2 on boot
 
 `/etc/mkinitcpio.conf`
 
