@@ -1,16 +1,18 @@
 ## how to create the bin, skip this, just for information
 
 ```bash
-echo Modeline "2256x1504_70"  281.12  2256 2304 2336 2576  1504 1507 1517 1559  +hsync +vsync ratio=3:2 | modeline2edid
-#add ratio parameter (see .S file)
-
-edid-generator -> make
-
+git clone https://github.com/akatrevorjay/edid-generator
+#check requirements, if there are errors
+cd edid-generator
+echo Modeline "2256x1504_70"  281.12  2256 2304 2336 2576  1504 1507 1517 1559  +hsync +vsync ratio=3:2 | ./modeline2edid
+#add ratio parameter for 3:2 (see .S file at the end). It is not supported out of the box in the edid.S
+make
 ```
 
 ## 1 add firmware
 ```bash
 cp 2256x1504_70.bin /usr/lib/firmware/edid/Internal70.bin
+#or the Internal70.bin (same file)
 ```
 
 ## 2 Kernel / initramfs prepare, to fix error -2 on boot
