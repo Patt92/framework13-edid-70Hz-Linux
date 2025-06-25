@@ -1,5 +1,7 @@
 ## how to create the bin, skip this, just for information
 
+### tested with Arch Linux (6.15.3-arch1-1)
+
 ```bash
 git clone https://github.com/akatrevorjay/edid-generator
 #check requirements, if there are errors
